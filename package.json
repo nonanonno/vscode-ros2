@@ -1,0 +1,40 @@
+{
+  "name": "vscode-ros2",
+  "displayName": "ROS2",
+  "description": "",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.55.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "ros2.interface",
+        "aliases": [
+          "ROS Interface",
+          "interface"
+        ],
+        "extensions": [
+          ".action",
+          ".msg",
+          ".srv"
+        ],
+        "configuration": "./language/language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "ros2.interface",
+        "scopeName": "source.ros2.interface",
+        "path": "./languages/syntaxes/ros2.interface.tmLanguage.json"
+      }
+    ]
+  },
+  "devDependencies": {
+    "typescript": "^3.9.9",
+    "tyscan": "^0.3.2"
+  }
+}

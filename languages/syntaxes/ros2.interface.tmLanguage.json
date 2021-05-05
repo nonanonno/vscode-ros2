@@ -1,0 +1,130 @@
+{
+    "name": "ROS Interface",
+    "scopeName": "source.ros2.interface",
+    "patterns": [
+        {
+            "name": "meta.field.ros2.interface",
+            "begin": "^\\b([a-zA-Z][(<=)/a-z_A-Z0-9]*)(\\[[<=\\d]*\\])?\\s(\\w+)",
+            "end": "$",
+            "beginCaptures": {
+                "1": {
+                    "patterns": [
+                        {
+                            "include": "#types"
+                        }
+                    ]
+                },
+                "2": {
+                    "patterns": [
+                        {
+                            "include": "#sequence"
+                        }
+                    ]
+                },
+                "3": {
+                    "patterns": [
+                        {
+                            "include": "#field"
+                        }
+                    ]
+                }
+            },
+            "patterns": [
+                {
+                    "include": "#numeric-constant"
+                },
+                {
+                    "include": "#string-constant"
+                },
+                {
+                    "include": "#boolean-constant"
+                },
+                {
+                    "include": "#comments"
+                }
+            ]
+        },
+        {
+            "include": "#comments"
+        },
+        {
+            "include": "#separator"
+        }
+    ],
+    "repository": {
+        "types": {
+            "patterns": [
+                {
+                    "match": "\\b(bool|byte|char|u?int(8|16|32|64)|float(32|64))\\b",
+                    "name": "storage.type.ros2.interface"
+                },
+                {
+                    "match": "\\bw?string(<=\\d+)?\\b",
+                    "name": "storage.type.ros2.interface"
+                },
+                {
+                    "match": "\\b[a-zA-Z]\\w*(\\/[a-zA-Z]\\w*)?\\b",
+                    "name": "support.class.ros2.interface"
+                }
+            ]
+        },
+        "sequence": {
+            "patterns": [
+                {
+                    "match": "\\[((<=)?\\d*)\\]",
+                    "captures": {
+                        "1": {
+                            "patterns": [
+                                {
+                                    "include": "#numeric-constant"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        "field": {
+            "patterns": [
+                {
+                    "match": "\\b[A-Z][A-Z_0-9]*\\b",
+                    "name": "support.constant.ros2.interface"
+                },
+                {
+                    "match": "\\b[a-z][a-z_0-9]*\\b",
+                    "name": "support.variable.ros2.interface"
+                }
+            ]
+        },
+        "comments": {
+            "match": "#.*$",
+            "name": "comment.line.number-sign.ros2.interface"
+        },
+        "numeric-constant": {
+            "match": "\\b[+-]?[0-9]*\\.?[0-9]+([eE][+-]?\\d+)?\\b",
+            "name": "constant.numeric"
+        },
+        "string-constant": {
+            "patterns": [
+                {
+                    "begin": "'",
+                    "end": "'",
+                    "name": "string.quoted.single.ros2.interface"
+                },
+                {
+                    "begin": "\"",
+                    "end": "\"",
+                    "name": "string.quoted.double.ros2.interface"
+                }
+            ]
+        },
+        "boolean-constant": {
+            "match": "\\b(True|False)\\b",
+            "name": "constant.language.ros2.interface"
+        },
+        "separator": {
+            "match": "^---",
+            "name": "keyword.other.ros2.interface"
+        }
+    }
+}
