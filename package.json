@@ -1,13 +1,23 @@
 {
   "name": "vscode-ros2",
   "displayName": "ROS2",
-  "description": "",
+  "description": "Robot Operation System 2 (ROS2)",
   "version": "0.0.1",
+  "publisher": "nonanonno",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nonanonno/vscode-ros2"
+  },
+  "icon": "assets/icon.png",
+  "license": "MIT",
   "engines": {
     "vscode": "^1.55.0"
   },
   "categories": [
     "Programming Languages"
+  ],
+  "keywords": [
+    "ros2"
   ],
   "contributes": {
     "languages": [
@@ -22,14 +32,14 @@
           ".msg",
           ".srv"
         ],
-        "configuration": "./language/language-configuration.json"
+        "configuration": "./lang-config/ros2.interface.json"
       }
     ],
     "grammars": [
       {
         "language": "ros2.interface",
         "scopeName": "source.ros2.interface",
-        "path": "./languages/syntaxes/ros2.interface.tmLanguage.json"
+        "path": "./lang-config/syntaxes/ros2.interface.json"
       }
     ]
   },
