@@ -62,7 +62,6 @@
     "glob": "^7.1.7",
     "mocha": "^8.4.0",
     "typescript": "^3.9.9",
-    "tyscan": "^0.3.2",
     "vscode-test": "^1.5.2"
   }
 }
