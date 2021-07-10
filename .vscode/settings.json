@@ -13,6 +13,9 @@
     "**/.DS_Store": true,
     "**/node_modules": true,
     "**/out": true,
-    "**/.vscode-test": true
+    "**/.vscode-test": true,
+    ".eslintrc.json": true,
+    ".vscodeignore": true,
+    "**/package-lock.json": true
   }
 }

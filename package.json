@@ -19,6 +19,10 @@
   "keywords": [
     "ros2"
   ],
+  "activationEvents": [
+    "onLanguage:ros2.interface"
+  ],
+  "main": "./client/out/extension",
   "contributes": {
     "languages": [
       {
@@ -45,23 +49,20 @@
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
+    "compile": "tsc -b",
+    "watch": "tsc -b -w",
+    "lint": "eslint client --ext ts",
+    "postinstall": "cd client && npm install && cd ..",
     "pretest": "npm run compile && npm run lint",
-    "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
+    "test": ""
   },
   "devDependencies": {
-    "@types/glob": "^7.1.3",
     "@types/mocha": "^8.2.2",
     "@types/node": "^15.12.0",
-    "@types/vscode": "^1.56.0",
     "@typescript-eslint/eslint-plugin": "^4.26.0",
     "@typescript-eslint/parser": "^4.26.0",
     "eslint": "^7.27.0",
-    "glob": "^7.1.7",
     "mocha": "^8.4.0",
-    "typescript": "^3.9.9",
-    "vscode-test": "^1.5.2"
+    "typescript": "^3.9.9"
   }
 }
