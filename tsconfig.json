@@ -5,11 +5,15 @@
   },
   "exclude": [
     "node_modules",
-    "client"
+    "client",
+    "server"
   ],
   "references": [
     {
       "path": "./client"
+    },
+    {
+      "path": "./server"
     }
   ]
 }
