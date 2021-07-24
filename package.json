@@ -74,7 +74,7 @@
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -b",
     "watch": "tsc -b -w",
-    "lint": "eslint client --ext ts",
+    "lint": "eslint server client --ext ts",
     "postinstall": "cd client && npm install && cd ../server && npm install && cd ..",
     "pretest": "npm run compile && npm run lint",
     "test": "",
