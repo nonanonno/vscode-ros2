@@ -16,9 +16,9 @@ jobs:
       - name: Markdown link check
         uses: gaurav-nelson/github-action-markdown-link-check@v1
       - name: Install Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
-          node-version: 10.x
+          node-version: 16
       - run: npm install
       - run: xvfb-run -a npm test
         if: runner.os == 'Linux'

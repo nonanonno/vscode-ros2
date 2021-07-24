@@ -1,0 +1,21 @@
+{
+  "name": "ros2-lsp-client",
+  "description": "LSP client for ros2 interface",
+  "publisher": "nonanonno",
+  "version": "0.0.1",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nonanonno/vscode-ros2"
+  },
+  "engines": {
+    "vscode": "^1.55.0"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.56.0",
+    "vscode-test": "^1.5.2"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^7.0.0"
+  }
+}
