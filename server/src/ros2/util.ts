@@ -47,6 +47,10 @@ function _searchPatternRecursive(dir: string, pattern: RegExp, skipIf: RegExp | 
 
 
 export function searchPatternRecursive(dir: string, pattern: RegExp, skipIf: RegExp | undefined = undefined, absolute = false) {
+  if (!fs.existsSync(dir)) {
+    console.warn("no such directory: ", dir);
+    return [];
+  }
   const m = _searchPatternRecursive(dir, pattern, skipIf);
 
   if (absolute) {
