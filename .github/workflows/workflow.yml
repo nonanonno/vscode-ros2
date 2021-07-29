@@ -1,0 +1,69 @@
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  release:
+    types:
+      - published
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Markdown link check
+        uses: gaurav-nelson/github-action-markdown-link-check@v1
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+      - run: npm install
+      - run: xvfb-run -a npm test
+        if: runner.os == 'Linux'
+      - run: npm test
+        if: runner.os != 'Linux'
+
+  archive-vsix:
+    runs-on: ubuntu-latest
+    needs: [build]
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+      - run: npm install
+      - name: Build VSIX package
+        run: |
+          npm install vsce -g
+          npm run compile
+          vsce package -o vscode-ros-dev.vsix
+      - uses: actions/upload-artifact@v1
+        with:
+          name: vscode-ros-dev-vsix
+          path: vscode-ros-dev.vsix
+
+  publish-vsix:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release' && github.event.action == 'published' && github.repository == 'nonanonno/vscode-ros2'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+      - run: npm install
+      - name: Publish VSIX package
+        run: |
+          npm install vsce -g
+          npm run compile
+          vsce publish -p ${{secrets.VSCE_PAT}}
