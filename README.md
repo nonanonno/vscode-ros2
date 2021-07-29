@@ -1,6 +1,6 @@
 # vscode-ros2
 
-[![.github/workflows/ci.yml](https://github.com/nonanonno/vscode-ros2/actions/workflows/ci.yml/badge.svg)](https://github.com/nonanonno/vscode-ros2/actions/workflows/ci.yml)
+[![.github/workflows/workflow.yml](https://github.com/nonanonno/vscode-ros2/actions/workflows/workflow.yml/badge.svg?branch=main)](https://github.com/nonanonno/vscode-ros2/actions/workflows/workflow.yml)
 
 VSCode extension for Robot Operation System 2 (ROS2).
 
