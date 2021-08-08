@@ -62,4 +62,13 @@ describe('ros2.package.Package', () => {
       assert.fail();
     }
   });
+
+  it('searchAtPath without skipping COLCON_IGNORE', () => {
+    const ans = Package.searchAtPath(testDir, false);
+    assert.equal(ans.length, 3);
+  });
+  it('searchAtPath with skipping COLCON_IGNORE', () => {
+    const ans = Package.searchAtPath(testDir, true);
+    assert.equal(ans.length, 2);
+  });
 });
