@@ -6,17 +6,26 @@ export const testPackages = {
   dir: 'src/test/ros2/testPackages',
   pkgs: [
     {
-      dir: 'test_package1',
+      dir: 'ws1/test_package1',
       name: 'test_package1',
       msgs: ['Test1.msg', 'Test2.msg'],
       files: ['package.xml', 'msg/Test1.msg', 'msg/Test2.msg'],
     },
     {
-      dir: 'test_package2',
+      dir: 'ws1/test_package2',
       name: 'test_package2',
       msgs: ['Test1.msg'],
       files: ['package.xml', 'msg/Test1.msg']
+    },
+    {
+      dir: 'ws2/test_package3',
+      name: 'test_package3',
+      msgs: ['Test1.msg'],
+      files: ['package.xml', 'msg/Test1.msg']
     }
+  ],
+  extras: [
+    'ws2/COLCON_IGNORE'
   ],
   listFilesAt: function (index: number) {
     const pkg = this.pkgs[index];
@@ -27,6 +36,7 @@ export const testPackages = {
     for (let i = 0; i < this.pkgs.length; i++) {
       files = files.concat(this.listFilesAt(i));
     }
+    files = files.concat(this.extras.map((f) => path.join(this.dir, f)));
     return files;
   }
 };
