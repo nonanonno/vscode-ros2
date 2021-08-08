@@ -20,7 +20,7 @@
     "ros2"
   ],
   "activationEvents": [
-    "onLanguage:ros2.interface"
+    "*"
   ],
   "main": "./client/out/extension",
   "contributes": {
@@ -67,6 +67,21 @@
         "language": "ros2.interface",
         "scopeName": "source.ros2.interface",
         "path": "./lang-config/syntaxes/ros2.interface.json"
+      }
+    ],
+    "taskDefinitions": [
+      {
+        "type": "colcon",
+        "properties": {
+          "workspace": {
+            "type": "string",
+            "description": "Path to the colcon workspace. (default vscode workspace)"
+          },
+          "args": {
+            "type": "array",
+            "description": "Command line arguments to colcon"
+          }
+        }
       }
     ]
   },
