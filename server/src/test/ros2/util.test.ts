@@ -4,7 +4,7 @@ import { testPackages, validateList } from './testHelper';
 import { findFilesRecursive, searchPatternRecursive, stem } from '../../ros2/util';
 
 
-describe('ros.util.findFilesRecursive', () => {
+describe('ros2.util.findFilesRecursive', () => {
   const testDir = testPackages.dir;
   const ref = testPackages.listFiles();
 

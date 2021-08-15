@@ -9,19 +9,19 @@ export const testPackages = {
       dir: 'ws1/test_package1',
       name: 'test_package1',
       msgs: ['Test1.msg', 'Test2.msg'],
-      files: ['package.xml', 'msg/Test1.msg', 'msg/Test2.msg'],
+      files: ['package.xml', 'CMakeLists.txt', 'msg/Test1.msg', 'msg/Test2.msg'],
     },
     {
       dir: 'ws1/test_package2',
       name: 'test_package2',
       msgs: ['Test1.msg'],
-      files: ['package.xml', 'msg/Test1.msg']
+      files: ['package.xml', 'CMakeLists.txt', 'msg/Test1.msg']
     },
     {
       dir: 'ws2/test_package3',
       name: 'test_package3',
       msgs: ['Test1.msg'],
-      files: ['package.xml', 'msg/Test1.msg']
+      files: ['package.xml', 'CMakeLists.txt', 'msg/Test1.msg']
     }
   ],
   extras: [
