@@ -10,6 +10,10 @@ RUN apt-get update -q && apt-get install -yq \
   npm \
   wget \
   curl \
+  libnss3 \
+  libatk-bridge2.0-0 \
+  libgtk-3-0 \
+  libgbm-dev \
   && npm install n -g \
   && n latest \
   && apt-get purge -yq \

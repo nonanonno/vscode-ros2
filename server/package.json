@@ -24,7 +24,8 @@
     "compile": "tsc -b",
     "lint": "eslint src --ext ts",
     "pretest": "npm run compile && npm run lint",
-    "test": "mocha out/test --recursive"
+    "test": "mocha out/test --recursive",
+    "clean": "rm -rf node_modules out"
   },
   "devDependencies": {
     "@types/chai": "^4.2.21",
