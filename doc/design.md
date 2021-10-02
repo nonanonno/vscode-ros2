@@ -1,0 +1,41 @@
+# Design
+# Usecase
+
+- インストールすると使える
+- ros のありなしが考えられる
+  - → ros が存在するかの確認が必要
+    - 存在するかどうかは、
+      - 1. ros2 コマンドと colcon コマンドが存在すること
+      - 2. 設定の rosRoot が存在し、そこの setup.bash を source した後に上記コマンドがあること
+    - ros バージョンは取得する
+      - ↑やった上での ROS_DISTRO
+- colcon コマンドを使いたい
+  - colcon build --packages-select
+  - colcon test --packages-select
+  - colcon パッケージを認識してサジェストする
+  - tasks.json の記述を簡略化できるようにする
+  - colcon build 時のオプションを設定できるようにする
+    - とりあえず任意で
+- ros2 コマンドを使いたい
+  - ros2 run <package> <node>
+  - ros2 launch <package> <launch>
+  - パッケージ名と実行ファイル、launch ファイルは補完したい
+    - 実行ファイルは bin 以下
+    - launch ファイルは share ディレクトリ以下の .launch.py, .launch.xml, .launch.yaml .launch.yml
+    - 無視して入力することも可能
+  - launch.json で使えるように
+- ROS2 View を作りたい
+  - ノード一覧
+    - 名前空間で閉じられるように
+    - kill できるように
+    - node info を見られるように
+  - トピック一覧
+    - 名前空間で閉じられるように
+    - 型がわかるように
+    - echo を表示
+- ros2 の機能を使うには、source ./install/setup.bash が必要
+  - そういうオプションを追加する
+  - デフォルトでは ws/install/setup.bash
+  - 複数の setup.bash がありえるので、複数設定できるように
+  - みつからなくてもエラーなしで
+  - AMENT_PREFIX_PATH を使うことになるかな

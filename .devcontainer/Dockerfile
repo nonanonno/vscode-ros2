@@ -26,7 +26,6 @@ RUN apt-get update && apt-get install -yq \
   python3-rosdep python3-vcstool \
   && apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN rosdep init && rosdep update
-RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> /etc/bash.bashrc
 
 
 # Install npm
