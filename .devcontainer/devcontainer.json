@@ -1,0 +1,24 @@
+{
+  "dockerFile": "Dockerfile",
+  "build": {
+    "args": {
+      "user_uid": "1000"
+    }
+  },
+  "remoteUser": "vscode",
+  "runArgs": [
+    "--net",
+    "host",
+    "-e",
+    "DISPLAY=${env:DISPLAY}",
+    "-v",
+    "/tmp/.X11-nix:/tmp/.X11-unix"
+  ],
+  "extensions": [
+    "wraith13.background-phi-colors",
+    "wraith13.bracket-lens",
+    "streetsidesoftware.code-spell-checker",
+    "eamodio.gitlens",
+    "yzhang.markdown-all-in-one"
+  ]
+}
