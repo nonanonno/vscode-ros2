@@ -77,10 +77,12 @@
     "lint": "eslint server client --ext ts",
     "postinstall": "cd client && npm install && cd ../server && npm install && cd ..",
     "pretest": "npm run compile && npm run lint",
-    "test": "",
-    "posttest": "cd server && npm test && cd ../"
+    "test": "node ./client/out/test/runTest.js",
+    "posttest": "cd server && npm test && cd ../",
+    "clean": "rm -rf node_modules && cd client && npm run clean && cd ../server npm run clean && cd .."
   },
   "devDependencies": {
+    "@types/glob": "^7.1.4",
     "@types/mocha": "^8.2.2",
     "@types/node": "^15.12.0",
     "@typescript-eslint/eslint-plugin": "^4.26.0",

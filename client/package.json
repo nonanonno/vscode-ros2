@@ -11,6 +11,9 @@
   "engines": {
     "vscode": "^1.55.0"
   },
+  "scripts": {
+    "clean": "rm -rf node_modules out"
+  },
   "devDependencies": {
     "@types/vscode": "^1.56.0",
     "vscode-test": "^1.5.2"
