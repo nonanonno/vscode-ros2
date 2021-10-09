@@ -6,7 +6,7 @@ async function main() {
   try {
     const extensionDevelopmentPath = path.resolve(__dirname, '../../../');
     const extensionTestsPath = path.resolve(__dirname, './index');
-    await runTests({ extensionDevelopmentPath, extensionTestsPath });
+    await runTests({ extensionDevelopmentPath, extensionTestsPath, launchArgs: ['--disable-gpu'] });
   } catch (err) {
     console.error("Failed to run tests");
     process.exit(1);
