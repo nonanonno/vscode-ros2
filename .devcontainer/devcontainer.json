@@ -19,6 +19,8 @@
     "wraith13.bracket-lens",
     "streetsidesoftware.code-spell-checker",
     "eamodio.gitlens",
-    "yzhang.markdown-all-in-one"
+    "yzhang.markdown-all-in-one",
+    "twxs.cmake",
+    "jebbs.plantuml"
   ]
 }
