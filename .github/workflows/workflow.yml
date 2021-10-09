@@ -23,6 +23,10 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 16
+      - name: Install ROS2
+        uses: ros-tooling/setup-ros@v0.2
+        with:
+          required-ros-distributions: foxy
       - run: npm install
       - run: xvfb-run -a npm test
         if: runner.os == 'Linux'
