@@ -1,27 +1,32 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 
-export let doc: vscode.TextDocument;
-export let editor: vscode.TextEditor;
+const extensionId = 'nonanonno.vscode-ros2';
 
-
-export async function activate(docUri: vscode.Uri) {
-  const ext = vscode.extensions.getExtension('nonanonno.vscode-ros2')!;
+export async function activate() {
+  const ext = vscode.extensions.getExtension(extensionId)!;
   await ext.activate();
+}
+
+export async function openDoc(docUri: vscode.Uri) {
   try {
-    doc = await vscode.workspace.openTextDocument(docUri);
-    editor = await vscode.window.showTextDocument(doc);
+    let doc = await vscode.workspace.openTextDocument(docUri);
+    await vscode.window.showTextDocument(doc);
+    await sleep(2000); // Wait for server activation
 
   } catch (e) {
     console.error(e);
   }
 }
 
-export function getDocPath(p: string) {
+async function sleep(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+export function getFixturePath(p: string) {
   return path.resolve(__dirname, '../../testFixture', p);
 }
 
-export function getDocUri(p: string) {
-  return vscode.Uri.file(getDocPath(p));
+export function getFixtureUri(p: string) {
+  return vscode.Uri.file(getFixturePath(p));
 }
-

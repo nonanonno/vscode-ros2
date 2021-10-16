@@ -1,28 +1,25 @@
 import * as vscode from 'vscode';
-import * as assert from 'assert';
-import { getDocUri, activate } from '../helper';
+import { activate, getFixtureUri, openDoc } from '../helper';
+import { goToDefinitionCmd, testFiles, rosRoot, createDefinitionLocation, validate } from './helper';
+import * as path from 'path';
+
 
 suite('Go to definition', () => {
-  const docUri = getDocUri('workspace1/test1_msgs/msg/Test1.msg');
+  const docUri = getFixtureUri(testFiles.test1);
 
   test('Can go to std_msgs/Header', async () => {
     await testDefinition(docUri, new vscode.Position(0, 0), [
-      new vscode.Location(vscode.Uri.file('/opt/ros/foxy/share/std_msgs/msg/Header.msg'), new vscode.Position(0, 0))
+      createDefinitionLocation(path.join(rosRoot, 'share/std_msgs/msg/Header.msg'))
     ]);
   });
 });
 
 async function testDefinition(docUri: vscode.Uri, position: vscode.Position, expected: vscode.Location[]) {
-  await activate(docUri);
+  await activate();
 
-  const actual = (await vscode.commands.executeCommand('vscode.executeDefinitionProvider', docUri, position) as vscode.Location[]);
+  await openDoc(docUri);
 
-  assert.ok(actual.length === expected.length);
-  for (let i = 0; i < expected.length; i++) {
-    const a = actual[i];
-    const e = expected[i];
-    assert.strictEqual(a.uri.path, e.uri.path);
-    assert.deepStrictEqual(a.range, e.range);
-  }
+  const actual = (await vscode.commands.executeCommand(goToDefinitionCmd, docUri, position) as vscode.Location[]);
 
+  validate(actual, expected);
 }
