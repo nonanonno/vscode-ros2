@@ -30,3 +30,4 @@ export function getFixturePath(p: string) {
 export function getFixtureUri(p: string) {
   return vscode.Uri.file(getFixturePath(p));
 }
+
