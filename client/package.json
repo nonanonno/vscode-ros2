@@ -2,7 +2,7 @@
   "name": "ros2-lsp-client",
   "description": "LSP client for ros2 interface",
   "publisher": "nonanonno",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "license": "MIT",
   "repository": {
     "type": "git",
