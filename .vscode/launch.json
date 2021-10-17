@@ -22,6 +22,33 @@
       "outFiles": [
         "${workspaceRoot}/server/out/**/*.js"
       ]
+    },
+    {
+      "name": "Extension Tests(Single)",
+      "type": "extensionHost",
+      "request": "launch",
+      "runtimeExecutable": "${execPath}",
+      "args": [
+        "--extensionDevelopmentPath=${workspaceFolder}",
+        "--extensionTestsPath=${workspaceFolder}/client/out/test/indexSingleFile"
+      ],
+      "outFiles": [
+        "${workspaceFolder}/client/out/test/**/*.js"
+      ]
+    },
+    {
+      "name": "Extension Tests(Folder)",
+      "type": "extensionHost",
+      "request": "launch",
+      "runtimeExecutable": "${execPath}",
+      "args": [
+        "--extensionDevelopmentPath=${workspaceFolder}",
+        "--extensionTestsPath=${workspaceFolder}/client/out/test/indexFolder",
+        "${workspaceFolder}/client/testFixture/workspace1"
+      ],
+      "outFiles": [
+        "${workspaceFolder}/client/out/test/**/*.js"
+      ]
     }
   ],
   "compounds": [

@@ -1,4 +1,4 @@
-ARG ros_distro=galactic
+ARG ros_distro=foxy
 FROM ros:${ros_distro}
 
 RUN apt-get update -q && apt-get upgrade -yq && apt-get clean && rm -rf /var/lib/apt/lists/*

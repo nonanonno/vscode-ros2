@@ -1,5 +1,39 @@
+import * as vscode from 'vscode';
 import * as path from 'path';
 
-export function getDocPath(p: string) {
+const extensionId = 'nonanonno.vscode-ros2';
+
+export async function activate() {
+  const ext = vscode.extensions.getExtension(extensionId)!;
+  await ext.activate();
+}
+
+export async function openDoc(docUri: vscode.Uri) {
+  try {
+    for (const d of vscode.workspace.textDocuments) {
+      if (d.uri.path === docUri.path) {
+        await vscode.window.showTextDocument(d);
+        return;
+      }
+    }
+    let doc = await vscode.workspace.openTextDocument(docUri);
+    await vscode.window.showTextDocument(doc);
+    await sleep(2000); // Wait for server activation
+
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+async function sleep(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+export function getFixturePath(p: string) {
   return path.resolve(__dirname, '../../testFixture', p);
 }
+
+export function getFixtureUri(p: string) {
+  return vscode.Uri.file(getFixturePath(p));
+}
+

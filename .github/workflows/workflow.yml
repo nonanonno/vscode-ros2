@@ -9,10 +9,7 @@ on:
 
 jobs:
   build:
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-    runs-on: ${{ matrix.os }}
+    runs-on: [self-hosted, foxy]
     if: github.event_name == 'push' || github.event_name == 'pull_request'
     steps:
       - name: Checkout
