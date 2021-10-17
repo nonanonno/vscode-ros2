@@ -4,6 +4,10 @@
 ### Fixed
 - Syntax highlighting is now work in the case 2 or more spaces exist after a type description
 
+### Internal
+- Separate LSP client function from extension.ts
+- Add test for LSP client
+
 ## 0.1.3 (2021-07-24)
 ### Internal
 - Setup CI for publishing the package
