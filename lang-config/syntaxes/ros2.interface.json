@@ -4,7 +4,7 @@
     "patterns": [
         {
             "name": "meta.field.ros2.interface",
-            "begin": "^\\b([a-zA-Z][(<=)/a-z_A-Z0-9]*)(\\[[<=\\d]*\\])?\\s(\\w+)",
+            "begin": "^\\b([a-zA-Z][(<=)/a-z_A-Z0-9]*)(\\[[<=\\d]*\\])?\\s+(\\w+)",
             "end": "$",
             "beginCaptures": {
                 "1": {
