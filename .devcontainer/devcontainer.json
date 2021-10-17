@@ -21,6 +21,8 @@
     "eamodio.gitlens",
     "yzhang.markdown-all-in-one",
     "twxs.cmake",
-    "jebbs.plantuml"
+    "jebbs.plantuml",
+    "mhutchie.git-graph",
+    "donjayamanne.githistory"
   ]
 }
