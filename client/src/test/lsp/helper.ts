@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import * as assert from 'assert';
+import { activate, openDoc } from '../helper';
 
 export const rosRoot = '/opt/ros/foxy';
 export const testFiles = {
@@ -26,3 +27,11 @@ export function validate(actual: vscode.Location[], expected: vscode.Location[])
   }
 }
 
+export async function testDefinition(docUri: vscode.Uri, position: vscode.Position, expected: vscode.Location[]) {
+  await activate();
+  await openDoc(docUri);
+
+  const actual = (await vscode.commands.executeCommand(goToDefinitionCmd, docUri, position) as vscode.Location[]);
+
+  validate(actual, expected);
+}

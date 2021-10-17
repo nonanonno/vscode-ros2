@@ -10,6 +10,12 @@ export async function activate() {
 
 export async function openDoc(docUri: vscode.Uri) {
   try {
+    for (const d of vscode.workspace.textDocuments) {
+      if (d.uri.path === docUri.path) {
+        await vscode.window.showTextDocument(d);
+        return;
+      }
+    }
     let doc = await vscode.workspace.openTextDocument(docUri);
     await vscode.window.showTextDocument(doc);
     await sleep(2000); // Wait for server activation
