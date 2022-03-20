@@ -2,7 +2,7 @@
   "dockerFile": "Dockerfile",
   "build": {
     "args": {
-      "user_uid": "1000"
+      "ros_distro": "foxy"
     }
   },
   "remoteUser": "vscode",
@@ -16,7 +16,6 @@
   ],
   "extensions": [
     "wraith13.background-phi-colors",
-    "wraith13.bracket-lens",
     "streetsidesoftware.code-spell-checker",
     "eamodio.gitlens",
     "yzhang.markdown-all-in-one",
