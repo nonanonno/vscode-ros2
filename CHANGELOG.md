@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.1.5 (2022-3-20)
+### Added
+- Auto detect `/opt/ros/<distro>` as ROS root when `rosRootDir` is empty in the configuration
+
 ## 0.1.4 (2021-10-18)
 ### Fixed
 - Syntax highlighting is now work in the case 2 or more spaces exist after a type description
