@@ -30,7 +30,7 @@
         "ros2.rosRootDir": {
           "scope": "resource",
           "type": "string",
-          "default": "/opt/ros/foxy",
+          "default": "",
           "description": "Path to ROS2 installation directory"
         },
         "ros2.additionalSearchDirs": {
