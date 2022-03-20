@@ -22,6 +22,8 @@
     "twxs.cmake",
     "jebbs.plantuml",
     "mhutchie.git-graph",
-    "donjayamanne.githistory"
+    "donjayamanne.githistory",
+    "EditorConfig.EditorConfig",
+    "esbenp.prettier-vscode"
   ]
 }

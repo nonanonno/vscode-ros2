@@ -31,7 +31,7 @@
           "scope": "resource",
           "type": "string",
           "default": "",
-          "description": "Path to ROS2 installation directory"
+          "description": "Path to ROS2 installation directory. If empty, default path of rolling, galactic or foxy will be selected."
         },
         "ros2.additionalSearchDirs": {
           "scope": "resource",
