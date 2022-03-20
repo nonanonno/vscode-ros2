@@ -45,11 +45,16 @@ jobs:
         if: runner.os == 'Linux'
       - run: npm test
         if: runner.os != 'Linux'
+
+  test-doc:
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v2
       - uses: gaurav-nelson/github-action-markdown-link-check@v1
 
   archive-vsix:
     runs-on: ubuntu-20.04
-    needs: [test]
+    needs: [test, test-doc]
     if: github.event_name == 'push' || github.event_name == 'pull_request'
     steps:
       - uses: actions/checkout@v2
