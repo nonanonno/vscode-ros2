@@ -7,12 +7,13 @@ import {
   Position,
   Range,
   TextDocumentSyncKind,
-  _Connection
+  _Connection,
 } from 'vscode-languageserver';
 import { DocumentManager } from './documentManager';
 import { identifyTypeKind, packageAndType } from './types';
 import { Package } from './package';
 import { URI } from 'vscode-uri';
+import { findRos2 } from './env';
 
 interface Capabilities {
   hasConfiguration: boolean;
@@ -21,13 +22,13 @@ interface Capabilities {
 }
 
 interface Settings {
-  rosRootDir: string;
+  rosRootDir: string | undefined;
   additionalSearchDirs: string[];
   skipColconIgnore: boolean;
 }
 
 const defaultSettings = {
-  rosRootDir: '/opt/ros/foxy',
+  rosRootDir: undefined,
   additionalSearchDirs: [],
   skipColconIgnore: true,
 };
@@ -42,10 +43,10 @@ export class Server {
     this.capabilities = {
       hasConfiguration: false,
       hasWorkspaceFolder: false,
-      hasDiagnosticRelatedInformation: false
+      hasDiagnosticRelatedInformation: false,
     };
 
-    connection.onInitialize(param => {
+    connection.onInitialize((param) => {
       return this.solveCapabilities(param.capabilities);
     });
 
@@ -57,13 +58,14 @@ export class Server {
 
     this.documentManager = new DocumentManager(connection);
 
-    connection.onDefinition(handle => this.searchDefinition(handle));
+    connection.onDefinition((handle) => this.searchDefinition(handle));
 
-    connection.onDidChangeConfiguration(change => {
+    connection.onDidChangeConfiguration((change) => {
       if (this.capabilities.hasConfiguration) {
         this.settings.clear();
       } else {
         this.globalSettings = <Settings>(change.settings.ros2 || defaultSettings);
+        this.globalSettings.rosRootDir = findRos2(this.globalSettings.rosRootDir);
       }
     });
   }
@@ -75,7 +77,8 @@ export class Server {
       hasDiagnosticRelatedInformation: !!(
         cap.textDocument &&
         cap.textDocument.publishDiagnostics &&
-        cap.textDocument.publishDiagnostics.relatedInformation)
+        cap.textDocument.publishDiagnostics.relatedInformation
+      ),
     };
 
     return {
@@ -84,10 +87,10 @@ export class Server {
         definitionProvider: true,
         workspace: {
           workspaceFolders: {
-            supported: this.capabilities.hasWorkspaceFolder
-          }
-        }
-      }
+            supported: this.capabilities.hasWorkspaceFolder,
+          },
+        },
+      },
     };
   }
 
@@ -125,7 +128,11 @@ export class Server {
           const folders = await this.connection.workspace.getWorkspaceFolders();
           if (folders) {
             for (const folder of folders) {
-              for (const msg of this.searchNamespacedType(typeToken.token.value, URI.parse(folder.uri).path, settings.skipColconIgnore)) {
+              for (const msg of this.searchNamespacedType(
+                typeToken.token.value,
+                URI.parse(folder.uri).path,
+                settings.skipColconIgnore
+              )) {
                 ret.push(Location.create(msg.path, range));
               }
             }
@@ -140,8 +147,14 @@ export class Server {
         }
 
         // ros2 root dir
-        for (const msg of this.searchNamespacedType(typeToken.token.value, settings.rosRootDir, settings.skipColconIgnore)) {
-          ret.push(Location.create(msg.path, range));
+        if (settings.rosRootDir) {
+          for (const msg of this.searchNamespacedType(
+            typeToken.token.value,
+            settings.rosRootDir,
+            settings.skipColconIgnore
+          )) {
+            ret.push(Location.create(msg.path, range));
+          }
         }
         break;
     }
@@ -177,11 +190,15 @@ export class Server {
     if (!result) {
       result = this.connection.workspace.getConfiguration({
         scopeUri: resource,
-        section: 'ros2'
+        section: 'ros2',
       });
+      result = result.then((settings) => {
+        settings.rosRootDir = findRos2(settings.rosRootDir);
+        return settings;
+      });
+
       this.settings.set(resource, result);
     }
     return result;
   }
-
 }
