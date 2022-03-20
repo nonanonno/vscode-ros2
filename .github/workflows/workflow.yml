@@ -6,40 +6,70 @@ on:
   release:
     types:
       - published
+  workflow_dispatch:
+    inputs:
+      name:
+        description: "Manual trigger"
+        required: true
 
 jobs:
   build:
-    runs-on: [self-hosted, foxy]
-    if: github.event_name == 'push' || github.event_name == 'pull_request'
+    runs-on: ubuntu-20.04
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Markdown link check
-        uses: gaurav-nelson/github-action-markdown-link-check@v1
-      - name: Install Node.js
-        uses: actions/setup-node@v2
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
         with:
           node-version: 16
       - run: npm install
+      - run: npm run compile
+
+  test:
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - ros: foxy
+    runs-on: ubuntu-20.04
+    container:
+      image: ros:${{ matrix.ros }}
+      options: --user 1001
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      volumes:
+        - /etc/passwd:/etc/passwd
+        - /etc/group:/etc/group
+        - /etc/shadow:/etc/shadow
+        - /etc/sudoers:/etc/sudoers
+        - /etc/sudoers.d:/etc/sudoers.d
+    needs: [build]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+      - run: npm install
+      - run: sudo apt-get update && sudo apt-get install -y xvfb libgtk-3.0 libgbm-dev libnss3 libatk-bridge2.0-0 libasound2
       - run: xvfb-run -a npm test
-        if: runner.os == 'Linux'
-      - run: npm test
-        if: runner.os != 'Linux'
+
+  test-doc:
+    runs-on: ubuntu-20.04
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v2
+      - uses: gaurav-nelson/github-action-markdown-link-check@v1
 
   archive-vsix:
-    runs-on: ubuntu-latest
-    needs: [build]
+    runs-on: ubuntu-20.04
+    needs: [test, test-doc]
     if: github.event_name == 'push' || github.event_name == 'pull_request'
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Install Node.js
-        uses: actions/setup-node@v2
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
         with:
           node-version: 16
       - run: npm install
-      - name: Build VSIX package
-        run: |
+      - run: |
           npm install vsce -g
           npm run compile
           vsce package -o vscode-ros-dev.vsix
@@ -49,18 +79,16 @@ jobs:
           path: vscode-ros-dev.vsix
 
   publish-vsix:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     if: github.event_name == 'release' && github.event.action == 'published' && github.repository == 'nonanonno/vscode-ros2'
+    needs: [build]
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Install Node.js
-        uses: actions/setup-node@v2
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
         with:
           node-version: 16
       - run: npm install
-      - name: Publish VSIX package
-        run: |
+      - run: |
           npm install vsce -g
           npm run compile
           vsce publish -p ${{secrets.VSCE_PAT}}
