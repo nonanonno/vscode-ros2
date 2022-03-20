@@ -31,22 +31,29 @@ jobs:
         include:
           - ros: foxy
     runs-on: ubuntu-20.04
+    container:
+      image: ros:${{ matrix.ros }}
+      options: --user 1001
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      volumes:
+        - /etc/passwd:/etc/passwd
+        - /etc/group:/etc/group
+        - /etc/shadow:/etc/shadow
+        - /etc/sudoers:/etc/sudoers
+        - /etc/sudoers.d:/etc/sudoers.d
     needs: [build]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
           node-version: 16
-      - uses: ros-tooling/setup-ros@v0.3
-        with:
-          required-ros-distributions: ${{ matrix.ros }}
       - run: npm install
+      - run: sudo apt-get update && sudo apt-get install -y xvfb libgtk-3.0 libgbm-dev libnss3 libatk-bridge2.0-0 libasound2
       - run: xvfb-run -a npm test
-        if: runner.os == 'Linux'
-      - run: npm test
-        if: runner.os != 'Linux'
 
   test-doc:
+    runs-on: ubuntu-20.04
     if: github.event_name == 'push' || github.event_name == 'pull_request'
     steps:
       - uses: actions/checkout@v2
